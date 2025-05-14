@@ -56,17 +56,18 @@ func (j *Job) Run() {
 	output, err := cmdInstall.CombinedOutput()
 	if err != nil {
 		log.Printf("npm install failed: %+v", err)
-		log.Printf("terminal output: %v", output)
+		log.Printf("terminal output: \n%s", string(output))
 		j.Status = "failed"
 	}
 	log.Printf("npm install success!")
-
-	cmdInstall = exec.Command("npm", "start")
+	// build command may not exist
+	// TODO: implement true checks
+	cmdInstall = exec.Command("npm", "run", "build")
 	cmdInstall.Dir = repository
 	output, err = cmdInstall.CombinedOutput()
 	if err != nil {
 		log.Printf("npm start failed: %+v", err)
-		log.Printf("terminal output: %v", output)
+		log.Printf("terminal output: \n%s", string(output))
 		j.Status = "failed"
 		return
 	}
