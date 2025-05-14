@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  runner:
+    build: .
+    image: ci-runner-api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./tmp:/app/tmp
